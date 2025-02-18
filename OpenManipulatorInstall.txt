@@ -1,0 +1,51 @@
+sudo apt update && sudo apt upgrade -y
+
+sudo apt install -y \
+  ros-jazzy-dynamixel-sdk \
+  ros-jazzy-ros2-control \
+  ros-jazzy-moveit* \
+  ros-jazzy-gz-ros2-control \
+  ros-jazzy-ros2-controllers \
+  ros-jazzy-controller-manager \
+  ros-jazzy-position-controllers \
+  ros-jazzy-joint-state-broadcaster \cd ..
+  ros-jazzy-joint-trajectory-controller \
+  ros-jazzy-gripper-controllers \
+  ros-jazzy-hardware-interface \
+  ros-jazzy-joint-limits \
+  ros-jazzy-trac-ik-kinematics-plugin \
+  ros-jazzy-xacro
+  
+mkdir -p colcon_ws/src
+cd ~/colcon_ws/src/
+git clone -b jazzy https://github.com/ROBOTIS-GIT/open_manipulator.git
+git clone -b humble https://github.com/ROBOTIS-GIT/dynamixel_hardware_interface.git
+git clone -b humble https://github.com/ROBOTIS-GIT/dynamixel_interfaces.git
+cd ~/colcon_ws && colcon build --symlink-install
+
+In servo.launch.py change
+Line 90         executable="servo_node",
+line 36   default_value='false',
+
+IN moveit_servo.yaml
+line 17      publish_period: 0.030  # 1/Nominal publish rate [seconds]
+
+In kinematics.yaml
+Line 2  kinematics_solver: trk_ik_kinematics_plugin/TRK_IKKinematicsPlugin
+
+In hardware.launch.py
+Line 62             default_value='/dev/ttyACM0',
+
+
+To Run:
+ros2 launch open_manipulator_x_bringup hardware.launch.py port_name:=/dev/ttyACM0
+ros2 launch open_manipulator_x_moveit_config moveit_core.launch.py
+
+
+Base Build Improves:
+1. Added to bash_aliases
+alias makerws='cd ~/ros2_ws && colcon build --symlink-install'
+
+2. Settings | Power | Screen Blank set to Never
+
+3. Code: Install the recommended 'Python' Extension from microsoft for the Python Language

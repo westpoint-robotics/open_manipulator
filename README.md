@@ -1,3 +1,32 @@
+# West Point OpenMANIPULATOR-X
+
+## Install Dependencies
+   ```bash
+        sudo apt install -y \
+        ros-jazzy-dynamixel-sdk \
+        ros-jazzy-ros2-control \
+        ros-jazzy-moveit* \
+        ros-jazzy-gz-ros2-control \
+        ros-jazzy-ros2-controllers \
+        ros-jazzy-controller-manager \
+        ros-jazzy-position-controllers \
+        ros-jazzy-joint-state-broadcaster \
+        ros-jazzy-joint-trajectory-controller \
+        ros-jazzy-gripper-controllers \
+        ros-jazzy-hardware-interface \
+        ros-jazzy-joint-limits \
+        ros-jazzy-trac-ik-kinematics-plugin \
+        ros-jazzy-xacro
+   ```
+
+## Clone this branch from th repo into your workspace and build it
+   ```bash
+   cd ~/${WORKSPACE}/src
+   git clone -b wp_jazzy https://github.com/westpoint-robotics/open_manipulator.git
+   cd ..
+   colcon build --symlink-install
+   ```
+
 # OpenMANIPULATOR-X
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/openmanipulator_x/OpenManipulator.png">
 <img src="https://github.com/ROBOTIS-GIT/emanual/blob/master/assets/images/platform/openmanipulator_x/OpenManipulator_Chain_Capture.png" width="500">

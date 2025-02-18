@@ -2,6 +2,7 @@
 
 ## Install Dependencies
    ```bash
+	sudo apt-get update && sudo apt-get upgrade \
         sudo apt install -y \
         ros-jazzy-dynamixel-sdk \
         ros-jazzy-ros2-control \

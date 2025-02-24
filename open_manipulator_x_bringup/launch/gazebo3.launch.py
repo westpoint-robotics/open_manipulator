@@ -138,11 +138,7 @@ def generate_launch_description():
                     )
                 ]
             ),
-            launch_arguments={
-                'gz_args': ['-r -s '],
-                'verbose': 'false',
-                'world': world,
-            }.items(),
+            launch_arguments={'gz_args': ['-r -s '], 'verbose': 'false', 'world': world,}.items(),
         ),
 
         Node(

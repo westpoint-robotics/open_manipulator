@@ -11,35 +11,46 @@
   <xacro:include filename="$(find open_manipulator_x_description)/gazebo/materials.xacro" />
 
   <!-- Import all Gazebo-customization elements, including Gazebo colors -->
-  <xacro:include filename="$(find open_manipulator_x_description)/gazebo/open_manipulator_x.gazebo.xacro" />
+  <xacro:include
+    filename="$(find open_manipulator_x_description)/gazebo/open_manipulator_x.gazebo.xacro" />
 
   <!-- Import URDF -->
-  <xacro:include filename="$(find open_manipulator_x_description)/urdf/open_manipulator_x.urdf.xacro" />
+  <xacro:include
+    filename="$(find open_manipulator_x_description)/urdf/open_manipulator_x.urdf.xacro" />
 
-  <xacro:include filename="$(find open_manipulator_x_description)/ros2_control/open_manipulator_x_system.ros2_control.xacro" />
+  <xacro:include
+    filename="$(find open_manipulator_x_description)/ros2_control/open_manipulator_gz_control.xacro" />
 
   <xacro:open_manipulator_x prefix="$(arg prefix)" />
   <xacro:open_manipulator_x_gazebo prefix="$(arg prefix)" />
-  <xacro:open_manipulator_x_system
-    name="OpenManipulatorXSystem" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
-    use_fake_hardware="$(arg use_fake_hardware)"
-    fake_sensor_commands="$(arg fake_sensor_commands)"
-    port_name="$(arg port_name)"/>
 
   <gazebo>
-    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+    <!-- <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+      <parameters>$(find open_manipulator_x_bringup)/config/gazebo_controller_manager.yaml</parameters>
+    </plugin> -->
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <robot_param>robot_description</robot_param>
+      <robot_param_node>robot_state_publisher</robot_param_node>
       <parameters>$(find open_manipulator_x_bringup)/config/gazebo_controller_manager.yaml</parameters>
     </plugin>
   </gazebo>
 
+  <!-- <xacro:open_manipulator_x_system
+    name="OpenManipulatorXSystem" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
+    use_fake_hardware="$(arg use_fake_hardware)"
+    fake_sensor_commands="$(arg fake_sensor_commands)"
+    port_name="$(arg port_name)" /> -->
+
+  <xacro:open_manipulator_x_system name="OpenManipulatorXSystem" prefix="$(arg prefix)" />
+
   <!-- World -->
-  <link name="world"/>
+  <link name="world" />
 
   <!-- World fixed joint-->
   <joint name="$(arg prefix)world_fixed" type="fixed">
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <parent link="world"/>
-    <child link="$(arg prefix)link1"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="world" />
+    <child link="$(arg prefix)link1" />
   </joint>
 
 </robot>

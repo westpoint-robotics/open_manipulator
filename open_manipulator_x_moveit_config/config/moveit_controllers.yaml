@@ -13,9 +13,10 @@
       - joint2
       - joint3
       - joint4
+      
   gripper_controller:
-    type: GripperCommand
+    type: forward_command_controller/ForwardCommandController
     joints:
       - gripper_left_joint
     action_ns: gripper_cmd
-    default: true
+    interface_name: position

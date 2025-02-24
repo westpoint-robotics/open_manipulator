@@ -73,7 +73,7 @@ def generate_launch_description():
     robot_name = LaunchConfiguration('robot_name')
     robot_sdf = LaunchConfiguration('robot_sdf')
     arm_joint_controller = LaunchConfiguration("arm_joint_controller")
-    # gripper_joint_controller = LaunchConfiguration("gripper_joint_controller")
+    gripper_joint_controller = LaunchConfiguration("gripper_joint_controller")
     activate_joint_controller = LaunchConfiguration("activate_joint_controller")
 
     # Map fully qualified names to relative ones so the node's namespace can be prepended.
@@ -204,32 +204,19 @@ def generate_launch_description():
         condition=UnlessCondition(activate_joint_controller),
     )
 
-    # gripper_controller_spawner = Node(
-    #     package='controller_manager',
-    #     executable='spawner',
-    #     arguments=[
-    #         'gripper_controller',
-    #         '--param-file',
-    #         ],
-    # )    
+    gripper_controller_spawner_started = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=[gripper_joint_controller, '--param-file', os.path.join(sim_dir, 'config', 'gz_gripper_controller_manager.yaml'), "-c", "/controller_manager"],
+        condition=IfCondition(activate_joint_controller),
+    )
 
-
-
-    # # There may be other controllers of the joints, but this is the initially-started one
-    # gripper_joint_controller_spawner_started = Node(
-    #     package="controller_manager",
-    #     executable="spawner",
-    #     arguments=[gripper_joint_controller, "-c", "/controller_manager"],
-    #     condition=IfCondition(activate_joint_controller),
-    # )
-
-    # gripper_joint_controller_spawner_stopped = Node(
-    #     package="controller_manager",
-    #     executable="spawner",
-    #     arguments=[gripper_joint_controller, "-c", "/controller_manager", "--stopped"],
-    #     condition=UnlessCondition(activate_joint_controller),
-    # )
-
+    gripper_joint_controller_spawner_stopped = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=[gripper_joint_controller, '--param-file', os.path.join(sim_dir, 'config', 'gz_gripper_controller_manager.yaml'), "-c", "/controller_manager", "--stopped"],
+        condition=UnlessCondition(activate_joint_controller),
+    )
 
     # rviz_cmd = Node(
     #     condition=IfCondition(use_rviz),
@@ -320,16 +307,15 @@ def generate_launch_description():
             FindExecutable(name='gz'),
             " service -s /gui/move_to/pose ",
             " --reqtype gz.msgs.GUICamera --reptype gz.msgs.Boolean --timeout 2000 ",
-            " --req 'pose: {position: {x: 0.12, y: -0.75, z: 0.34} orientation: {x: -0.0494374, y: 0.0494767, z: 0.7050942, w: 0.7056559}}' ",
+            " --req 'pose: {position: {x: 0.24, y: -0.22, z: 0.39} orientation: {x: -0.0494374, y: 0.0494767, z: 0.7050942, w: 0.7056559}}' ",
         ]],
         shell=True
     )
-    # gz service -s /gui/move_to/pose --reqtype gz.msgs.GUICamera --reptype gz.msgs.Boolean --timeout 2000 --req "pose: {position: {x: 0.12, y: -0.75, z: 0.34} orientation: {x: -0.0494374, y: 0.0494767, z: 0.7050942, w: 0.7056559}}"
 
     # spawn_gripper_controller = RegisterEventHandler(
     #         event_handler=OnProcessExit(
     #             target_action=joint_state_broadcaster_spawner,
-    #             on_exit=[gripper_controller_spawner],
+    #             on_exit=[gripper_controller_spawner_started],
     #         )
     #     )
 
@@ -365,9 +351,9 @@ def generate_launch_description():
     ld.add_action(joint_state_broadcaster_spawner)
     ld.add_action(arm_joint_controller_spawner_started)
     ld.add_action(arm_joint_controller_spawner_stopped)
-    # ld.add_action(spawn_gripper_controller)
-    # ld.add_action(gripper_joint_controller_spawner_started)
-    # ld.add_action(gripper_joint_controller_spawner_stopped)
+    #ld.add_action(spawn_gripper_controller)
+    ld.add_action(gripper_controller_spawner_started)
+    ld.add_action(gripper_joint_controller_spawner_stopped)
 
     # Add the actions to launch all of the navigation nodes
     ld.add_action(start_robot_state_publisher_cmd)

@@ -18,13 +18,27 @@
 
 - To run headless, change line 129 in open_manipulator_x_bringup/launch/gazebo.launch.py from `False` to `True`
 
-- Start the simulator with the Manipulator  
+### Start the simulator with the Manipulator  
+
 `ros2 launch open_manipulator_x_bringup gazebo.launch.py`
 
-- Start RVIZ Moveit Plugin  
+### Start RVIZ Moveit Plugin  
+
 `ros2 launch open_manipulator_x_moveit_config moveit_gz.launch.py`
 
 - NOTE: as of 24FEB2025 the gripper does not work and generates errors. Any errors related to the gripper can be ignored.
+
+### To run an example PYTHON control
+
+- Start the simulator if not already running  
+`ros2 launch open_manipulator_x_bringup gazebo.launch.py`
+
+- Launch the python control code  
+`ros2 launch open_manipulator_x_bringup test_joint_trajectory_controller.launch.py`
+
+- This launch file runs the code found in the file `open_manipulator_x_bringup/open_manipulator_x_bringup/publisher_joint_trajectory_controller.py`
+
+- It moves to the positions defined in the file `open_manipulator_x_bringup/config/test_goal_publishers_config.yaml`
 
 ## On Real Hardware
 

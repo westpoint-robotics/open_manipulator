@@ -31,7 +31,7 @@ arm_controller:
     state_publish_rate: 200.0
     action_monitor_rate: 20.0
 
-    allow_partial_joints_goal: false
+    allow_partial_joints_goal: true
     open_loop_control: true
     allow_integration_in_goal_trajectories: true
     constraints:

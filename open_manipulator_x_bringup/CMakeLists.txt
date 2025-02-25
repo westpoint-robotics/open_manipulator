@@ -8,12 +8,16 @@ project(open_manipulator_x_bringup)
 # Find and load build settings from external packages
 ################################################################################
 find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_python REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclpy REQUIRED)
 
+ament_python_install_package(${PROJECT_NAME})
 ################################################################################
 # Install
 ################################################################################
 install(
-  DIRECTORY launch config rviz worlds
+  DIRECTORY launch config rviz worlds open_manipulator_x_bringup
   DESTINATION share/${PROJECT_NAME}
 )
 
@@ -21,7 +25,7 @@ install(FILES 99-open-manipulator-cdc.rules
   DESTINATION share/${PROJECT_NAME}
 )
 
-install(PROGRAMS scripts/create_udev_rules
+install(PROGRAMS scripts/create_udev_rules open_manipulator_x_bringup/publisher_joint_trajectory_controller.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

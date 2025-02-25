@@ -3,9 +3,7 @@
 <package format="3">
   <name>open_manipulator_x_bringup</name>
   <version>3.0.0</version>
-  <description>
-    OpenMANIPULATOR-X bringup ROS 2 package.
-  </description>
+  <description> OpenMANIPULATOR-X bringup ROS 2 package. </description>
   <maintainer email="pyo@robotis.com">Pyo</maintainer>
   <license>Apache 2.0</license>
   <url type="website">http://wiki.ros.org/open_manipulator</url>
@@ -15,6 +13,9 @@
   <author email="wsh@robotis.com">Sungho Woo</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+  <depend>rclcpp</depend>
+  <depend>rclpy</depend>
   <exec_depend>ros_gz</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>
   <!-- <exec_depend>ros-jazzy-gz-ros2-control</exec_depend> -->

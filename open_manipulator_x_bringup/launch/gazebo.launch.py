@@ -337,7 +337,7 @@ def generate_launch_description():
     ld.add_action(declare_robot_sdf_cmd)
     ld.add_action(declare_activate_joint_controller_cmd)
     ld.add_action(declare_arm_joint_controller_sdf_cmd)
-    ld.add_action(declare_gripper_joint_controller_sdf_cmd)
+    # ld.add_action(declare_gripper_joint_controller_sdf_cmd)
 
     ld.add_action(set_env_vars_resources)
     ld.add_action(set_env_vars_resources2)
@@ -352,8 +352,7 @@ def generate_launch_description():
     ld.add_action(arm_joint_controller_spawner_started)
     ld.add_action(arm_joint_controller_spawner_stopped)
     #ld.add_action(spawn_gripper_controller)
-    ld.add_action(gripper_controller_spawner_started)
-    ld.add_action(gripper_joint_controller_spawner_stopped)
+
 
     # Add the actions to launch all of the navigation nodes
     ld.add_action(start_robot_state_publisher_cmd)

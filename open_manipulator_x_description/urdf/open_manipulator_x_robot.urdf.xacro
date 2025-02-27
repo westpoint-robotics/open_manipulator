@@ -2,10 +2,6 @@
 <!-- OpenManipulator Chain -->
 <robot name="open_manipulator_x" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:arg name="prefix" default="" />
-  <xacro:arg name="use_sim" default="false" />
-  <xacro:arg name="use_fake_hardware" default="false" />
-  <xacro:arg name="fake_sensor_commands" default="false" />
-  <xacro:arg name="port_name" default="/dev/ttyUSB0" />
 
   <!-- Import Rviz colors -->
   <xacro:include filename="$(find open_manipulator_x_description)/gazebo/materials.xacro" />
@@ -25,21 +21,12 @@
   <xacro:open_manipulator_x_gazebo prefix="$(arg prefix)" />
 
   <gazebo>
-    <!-- <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-      <parameters>$(find open_manipulator_x_bringup)/config/gazebo_controller_manager.yaml</parameters>
-    </plugin> -->
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
       <robot_param>robot_description</robot_param>
       <robot_param_node>robot_state_publisher</robot_param_node>
       <parameters>$(find open_manipulator_x_bringup)/config/gazebo_controller_manager.yaml</parameters>
     </plugin>
   </gazebo>
-
-  <!-- <xacro:open_manipulator_x_system
-    name="OpenManipulatorXSystem" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
-    use_fake_hardware="$(arg use_fake_hardware)"
-    fake_sensor_commands="$(arg fake_sensor_commands)"
-    port_name="$(arg port_name)" /> -->
 
   <xacro:open_manipulator_x_system name="OpenManipulatorXSystem" prefix="$(arg prefix)" />
 

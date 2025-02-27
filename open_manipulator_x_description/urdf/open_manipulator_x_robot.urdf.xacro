@@ -14,11 +14,15 @@
   <xacro:include
     filename="$(find open_manipulator_x_description)/urdf/open_manipulator_x.urdf.xacro" />
 
-  <xacro:include
-    filename="$(find open_manipulator_x_description)/ros2_control/open_manipulator_gz_control.xacro" />
+  <xacro:include filename="$(find open_manipulator_x_description)/ros2_control/open_manipulator_x_system.ros2_control.xacro" />
 
   <xacro:open_manipulator_x prefix="$(arg prefix)" />
   <xacro:open_manipulator_x_gazebo prefix="$(arg prefix)" />
+  <xacro:open_manipulator_x_system
+    name="OpenManipulatorXSystem" prefix="$(arg prefix)" use_sim="$(arg use_sim)"
+    use_fake_hardware="$(arg use_fake_hardware)"
+    fake_sensor_commands="$(arg fake_sensor_commands)"
+    port_name="$(arg port_name)"/>
 
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
